@@ -1,0 +1,76 @@
+<html>
+    <head>
+        <!-- writing variable in ejs -->
+        <title>      
+            <%= title %>
+        </title>
+        
+        <!-- font awsome kit code -->
+        <script src="https://kit.fontawesome.com/7ffff76e4d.js" crossorigin="anonymous"></script>
+
+        <!-- adding our css file at last-->
+        <link rel="stylesheet" href="/css/home.css">
+
+    </head>
+
+
+    <body>
+        
+        <div id="heading-holder">
+            <div id="come-to-top">
+                <!-- contains nothing, just a checkpoint to top of the page -->
+            </div>
+            
+            <h1 id="page-heading">MY CONTACTS LIST</h1>
+
+            <!-- clicking on main icons takes u to the top -->
+            <a href="#come-to-top">
+                <i class="fas fa-address-book main-icon"></i>
+            </a>
+        </div>
+
+        <!-- lets create a for..of loop to put each contact as a list item -->
+
+        <div id="contacts-list-container">
+            <ul>
+                <% for(let i of contact_list){ %>
+                    <li>
+                        <div class="details">
+                            <p class="name"><%= i.name %></p>
+                            <p id="phone-number"><%= i.phone %></p>
+                        </div>
+
+                        <div class="delete-button">
+
+                            <!-- using request.query  -->
+                            <!-- request is sent via ajax -->
+                            
+                            <i class="fas fa-trash-alt delete-icon" data-name="<%=i.name%>" data-phone="<%=i.phone%>" data-uniqueId="<%=i._id%>"></i>
+                    
+
+                        </div>
+                    </li>
+                <%}%>
+            </ul>
+        </div>
+
+        <!-- creating a form to get info from user -->
+        <!-- action represents where u need to send data -->
+        <form action="/create-contact" method="POST" autocomplete="off">
+            <input type="text" name="name" placeholder="Name" required>
+            <input type="text" name="phone" placeholder="Phone" required pattern="[0-9]{10}" title="Enter a valid 10 digit phone number">
+
+            <button type="submit">Add Contact</button>
+        </form>
+        
+
+    <!-- CDN'S     -->
+    <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+    rel = "stylesheet">
+    <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+    <!-- adding my script -->
+    <script type="text/javascript" src="/js/home.js"></script>
+    </body>
+</html>
