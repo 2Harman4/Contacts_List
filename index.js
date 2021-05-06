@@ -28,6 +28,7 @@ app.use(express.static("./assets"));
 
 //setting the response from server
 //controller for route homepage
+// R-read
 app.get('/',function(req,res){
 
     Contact.find({},function(err,contacts){
@@ -49,25 +50,26 @@ app.get('/',function(req,res){
      });
 });
 
-
+//C-create
 //controller for route create-contact
 app.post('/create-contact',function(req,res){
 
-    Contact.create({
-        name:req.body.name,
-        phone:req.body.phone
-    },function(err,newContact){
+    // lets see how ajax sends request
+    console.log(req.body);
+    
+
+    Contact.create(req.body,function(err,newContact){
         if(err){
             console.log("error in creating contact",err);
             return;
         }
         //if contact created
         console.log('********',newContact);
-        return res.redirect('/');
+        res.send('contact created and back in ajax');
     });
 });
 
-
+//D-delete
 //controller for route delete-contact(app.delete works with AJAX)
 // method:2 ---- Request.Query
 app.get('/delete-contact',function(req,res){

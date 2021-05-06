@@ -29,39 +29,55 @@
             </a>
         </div>
 
-        <!-- lets create a for..of loop to put each contact as a list item -->
+        <section id="content">
+            <!-- lets create a for..of loop to put each contact as a list item -->
 
-        <div id="contacts-list-container">
-            <ul>
-                <% for(let i of contact_list){ %>
-                    <li>
-                        <div class="details">
-                            <p class="name"><%= i.name %></p>
-                            <p id="phone-number"><%= i.phone %></p>
-                        </div>
+            <div id="left-div">
 
-                        <div class="delete-button">
+                <div id="saved-contacts-heading">
+                    <h1>Saved Contacts</h1>
+                    <i class="fas fa-user-plus add-contact-icon"></i>
+               </div>
 
-                            <!-- using request.query  -->
-                            <!-- request is sent via ajax -->
-                            
-                            <i class="fas fa-trash-alt delete-icon" data-name="<%=i.name%>" data-phone="<%=i.phone%>" data-uniqueId="<%=i._id%>"></i>
-                    
+                <div id="contacts-list-container">
+                     <ul>
+                         <% for(let i of contact_list){ %>
+                             <li>
+                                 <div class="details">
+                                     <p class="name"><%= i.name %></p>
+                                     <p id="phone-number"><%= i.phone %></p>
+                                 </div>
+     
+                                 <div class="delete-button">
+     
+                                     <!-- using request.query  -->
+                                     <!-- request is sent via ajax -->  
+                                     <i class="fas fa-trash-alt delete-icon"  data-uniqueId="<%=i._id%>"></i>
+                             
+     
+                                 </div>
+                             </li>
+                         <%}%>
+                     </ul>
+                 </div>
+            </div>
 
-                        </div>
-                    </li>
-                <%}%>
-            </ul>
-        </div>
+            <div id="changer" class="add-contact invisible">
 
-        <!-- creating a form to get info from user -->
-        <!-- action represents where u need to send data -->
-        <form action="/create-contact" method="POST" autocomplete="off">
-            <input type="text" name="name" placeholder="Name" required>
-            <input type="text" name="phone" placeholder="Phone" required pattern="[0-9]{10}" title="Enter a valid 10 digit phone number">
+                <div id="changer-heading">
+                    <h1>Create A Contact &nbsp;<i class="fas fa-pen"></i> </h1>
+                </div>
 
-            <button type="submit">Add Contact</button>
-        </form>
+                 <!-- creating a form to get info from user -->
+                <form id="create-contact-form" autocomplete="off">
+                    <input type="text" name="name" placeholder="Name" required>
+                    <input type="text" name="phone" placeholder="Phone" required pattern="[0-9]{10}" title="Enter a valid 10 digit phone number">
+
+                    <button id="save-changes-button" type="submit">SAVE</button>
+                </form>
+
+            </div>
+        </section>
         
 
     <!-- CDN'S     -->
