@@ -245,7 +245,7 @@ form{
     padding: 2%;
 }
 
-input[type="text"],input[type="number"]{
+input[type="text"]{
     border: none;
     border-bottom: 2px solid black;
     width: 80%;
@@ -262,17 +262,6 @@ input[type="text"],input[type="number"]{
 }
 
 
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* Firefox */
-input[type=number] {
-  -moz-appearance: textfield;
-}
 
 input:focus{
     outline: none;

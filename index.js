@@ -4,6 +4,7 @@ const path = require('path');
 
 //including ur DATABASE Configuration
 const db = require('./config/mongoose');
+const { update } = require('./models/contact');
 
 //this Contact will be used to create enteries
 const Contact = require('./models/contact');
@@ -92,6 +93,35 @@ app.get('/delete-contact',function(req,res){
 
     res.send("contact deleted and back to ajax");
 });
+
+// -------------------------------------------------------------
+// U-Update
+//route and controller for update request
+app.post('/update-contact',function(req,res){
+
+    let id = req.body.id;
+    console.log('selected contact has id:',id);
+
+    Contact.findByIdAndUpdate(id,{
+        name: req.body.name,
+        phone: req.body.phone
+        },function (err,docs) {
+            if (err){
+                console.log(err);
+            }
+    
+           console.log("Updated User : ",docs);
+           return;
+        }
+        );   
+  
+
+    res.send("contact updated and back to ajax");
+});
+
+
+
+
 
 // running the server
 app.listen(port,function(err){
