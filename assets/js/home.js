@@ -5,6 +5,7 @@
         const heading = $('#page-heading');
         const mainIcon = $('.main-icon');
         const leftDiv = $('#left-div');
+        const headingHolder = $('#heading-holder');
         const changer = $('#changer');
         const changerHeading = $('#changer-heading');
         let deleteButtons = $('.delete-button');
@@ -22,22 +23,28 @@
         //animating the page and main icon----------------------------
         $(document).scroll(function(){
 
-            if( $(document).scrollTop() >= 600){
+            let scrollFactor= (headingHolder.innerHeight())/ ($(document).scrollTop() + .0001);
+            
+            console.log(`headingHolder height is : ${headingHolder.innerHeight()}`);
+            console.log('scrolled by :',$(document).scrollTop() );
+            console.log(`scrollFactor is : ${scrollFactor}`);
+
+            if( scrollFactor >= 2.3){
+                heading.css('filter','opacity(1)');
+                mainIcon.css('filter','opacity(0)');
+                
+            }
+        
+            else if( scrollFactor >= 1.7){
+                    heading.css('filter','opacity(0.5)');
+                    mainIcon.css('filter','opacity(0)');
+                    mainIcon.removeClass('move-icon');
+            }
+            else {
                 heading.css('filter','opacity(0)');
                 mainIcon.css('filter','opacity(1)');
                 mainIcon.addClass('move-icon');
                 leftDiv.css('filter','opacity(1)');
-            }
-        
-            else if( $(document).scrollTop() >= 200){
-                     heading.css('filter','opacity(0.5)');
-                      mainIcon.css('filter','opacity(0)');
-        
-            }
-            else{
-                heading.css('filter','opacity(1)');
-                mainIcon.css('filter','opacity(0)');
-                mainIcon.removeClass('move-icon');
             }
         });
 
