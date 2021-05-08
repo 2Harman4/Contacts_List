@@ -9,7 +9,6 @@ const { update } = require('./models/contact');
 //this Contact will be used to create enteries
 const Contact = require('./models/contact');
 
-
 //app is naming convention
 //we need to fire express to get all of its functionalites
 const app = express();
@@ -100,8 +99,7 @@ app.get('/delete-contact',function(req,res){
 app.post('/update-contact',function(req,res){
 
     let id = req.body.id;
-    console.log('selected contact has id:',id);
-
+    let updatedContact ;
     Contact.findByIdAndUpdate(id,{
         name: req.body.name,
         phone: req.body.phone
@@ -109,14 +107,17 @@ app.post('/update-contact',function(req,res){
             if (err){
                 console.log(err);
             }
-    
-           console.log("Updated User : ",docs);
+            
+            updatedContact = docs;
+            console.log("Updated User : ",updatedContact);
+
            return;
         }
         );   
-  
+    
+    console.log('contact updated and now in *********controller********')
+    res.send(`contact updated and back in ajax`);
 
-    res.send("contact updated and back to ajax");
 });
 
 

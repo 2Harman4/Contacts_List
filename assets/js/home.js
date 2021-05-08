@@ -13,22 +13,24 @@
         const addContactIcon = $('.add-contact-icon');
         let saveChangesButton = $('#save-changes-button');
         let uniqueId;
+        let contactListItem;        
+    
+
       
         //in case a new contact is created, and its button to in array
         $('ul').change(function(){
             deleteButtons = $('.delete-button');
-        })
+        });
 
+        changer.on('click',function(e){
+            e.stopPropagation();
+        });
 
         //animating the page and main icon----------------------------
         $(document).scroll(function(){
 
             let scrollFactor= (headingHolder.innerHeight())/ ($(document).scrollTop() + .0001);
             
-            console.log(`headingHolder height is : ${headingHolder.innerHeight()}`);
-            console.log('scrolled by :',$(document).scrollTop() );
-            console.log(`scrollFactor is : ${scrollFactor}`);
-
             if( scrollFactor >= 2.3){
                 heading.css('filter','opacity(1)');
                 mainIcon.css('filter','opacity(0)');
@@ -51,7 +53,7 @@
         // ===================================================================
         // pressing the add contact icon will put the display of changer to block
         //Layout for changer --create contact
-        addContactIcon.click(function(){
+        addContactIcon.on('click',function(){
             changer.toggleClass('visible invisible');
 
             //adding the changer heading
@@ -68,10 +70,14 @@
         });
 
         // ==================================================================================
+               
+
         // Layout for Updating a Contact
-        $('li').click(function(){
-            
-            let contactListItem = $(this);
+        $('li').on('click',function(event){
+
+            event.stopPropagation();
+
+            contactListItem = $(this);
             let name = contactListItem.attr('data-name');
             let phone = contactListItem.attr('data-phone');
             //to be used by ajax
@@ -92,7 +98,7 @@
             $('#phone-inputer').val(phone);
 
             //need to remove the class creator if present
-            changer.removeClass('creator');
+            saveChangesButton.removeClass('creator');
 
             //allset
         });
@@ -104,9 +110,10 @@
     form.on('submit',function(event){
         
         event.preventDefault();
+        event.stopPropagation();
         let thisFormData =  form.serializeArray();
 
-        //CREATING NEW CONTACT
+        //------------------CREATING NEW CONTACT
         if(saveChangesButton.hasClass('creator')){
          
             console.log('data from form to create: ',thisFormData);
@@ -121,9 +128,29 @@
                 success: function(data){
                     //lets see what comes from server
                     console.log(data);
+
+                    //lets reflect he changes in display
+                    $('ul').prepend(
+                        `<li id="new-li" data-name="${thisFormData[0].value}" data-phone="${thisFormData[1].value}>" data-uniqueid="${uniqueId}">
+                        <div class="details">
+                            <p class="name">${thisFormData[0].value}</p>
+                            <p class="phone-number">${thisFormData[1].value}</p>
+                        </div>
+
+                        <div class="delete-button">
+                            <!-- using request.query  -->
+                            <!-- request is sent via ajax -->  
+                            <i class="fas fa-trash-alt delete-icon"  data-uniqueId="${uniqueId}"></i>
+                        </div>
+                    </li>`
+                    )
                 }
             });
-        }else{
+
+            //the changer collapses on update
+            changer.toggleClass('visible invisible');
+        }else
+        {
             //Update
             //-------------------now need to send request to server via ajax
         
@@ -143,16 +170,44 @@
                     "id":uniqueId
                 },
                 success: function(data){
+                    //checking
                     console.log(data);
-                }
+
+                    //lets reflect changes in display---------------
+                    contactListItem.replaceWith(
+                        `<li id="new-li" data-name="${thisFormData[0].value}" data-phone="${thisFormData[1].value}>" data-uniqueid="${uniqueId}">
+                            <div class="details">
+                                <p class="name">${thisFormData[0].value}</p>
+                                <p class="phone-number">${thisFormData[1].value}</p>
+                            </div>
+
+                            <div class="delete-button">
+                                <!-- using request.query  -->
+                                <!-- request is sent via ajax -->  
+                                <i class="fas fa-trash-alt delete-icon"  data-uniqueId="${uniqueId}"></i>
+                            </div>
+                        </li>`
+                    );
+
+                  
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(xhr.status);
+                    alert(thrownError);
+                  }
             });
+
+
+            //the changer collapses on update
+            changer.toggleClass('visible invisible');
+
         }
     });
 
         // ------------------------------------------------------------
         // TRYING AJAX --- Deleting a contact
 
-        deleteButtons.click(function(event){
+        deleteButtons.on('click',function(event){
 
             event.stopPropagation();
 
@@ -178,7 +233,9 @@
                 error: function(jqXHR, textStatus, errorThrown) {
                          alert('error ' + textStatus + " " + errorThrown);
                 }    
-            });      
+            });
+            
+
         });
     });
 }
