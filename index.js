@@ -122,8 +122,6 @@ app.post('/update-contact',function(req,res){
 
 
 
-
-
 // running the server
 app.listen(port,function(err){
     if(err){

@@ -68,7 +68,22 @@
 
 
         });
-
+                        //to handle the dynamically added elements
+                        // addContactIcon.on('click','.new-li',function(){
+                        //     changer.toggleClass('visible invisible');
+                
+                        //     //adding the changer heading
+                        //     changerHeading.html('<h1>Add Contact &nbsp;<i class="fas fa-pen"></i> </h1>')
+                
+                        //     //emptying the input boxses if filled by update and not submitted
+                        //     $('#name-inputer').val("");
+                        //     $('#phone-inputer').val("");
+                
+                        //     //adding a class creator to saveChangesButton 
+                        //     saveChangesButton.toggleClass('creator');
+                
+                
+                        // });
         // ==================================================================================
                
 
@@ -102,7 +117,37 @@
 
             //allset
         });
-    
+
+                                            //to hande dynamically added elements
+                                            // $('li').on('click','.new-li',function(event){
+
+                                            //     event.stopPropagation();
+                                    
+                                            //     contactListItem = $(this);
+                                            //     let name = contactListItem.attr('data-name');
+                                            //     let phone = contactListItem.attr('data-phone');
+                                            //     //to be used by ajax
+                                            //     uniqueId = contactListItem.attr('data-uniqueid');
+                                    
+                                            //     console.log("the item u selected has an id:***",uniqueId);
+                                    
+                                            //     //we need to make the changer visible if not
+                                            //     if(changer.hasClass('invisible')){
+                                            //         changer.toggleClass('invisible visible');
+                                            //     }
+                                    
+                                            //     //adding the changer heading
+                                            //     changerHeading.html(' <h1>Update Contact &nbsp;<i class="fas fa-user-edit"></i> </h1>')
+                                    
+                                            //     //adding name and phone number to the input boxes
+                                            //     $('#name-inputer').val(name);
+                                            //     $('#phone-inputer').val(phone);
+                                    
+                                            //     //need to remove the class creator if present
+                                            //     saveChangesButton.removeClass('creator');
+                                    
+                                            //     //allset
+                                            // });
 
     // ====================================================================
         // ajax for creating contact + UPDATING 
@@ -131,7 +176,7 @@
 
                     //lets reflect he changes in display
                     $('ul').prepend(
-                        `<li id="new-li" data-name="${thisFormData[0].value}" data-phone="${thisFormData[1].value}>" data-uniqueid="${uniqueId}">
+                        `<li class="new-li" data-name="${thisFormData[0].value}" data-phone="${thisFormData[1].value}>" data-uniqueid="${uniqueId}">
                         <div class="details">
                             <p class="name">${thisFormData[0].value}</p>
                             <p class="phone-number">${thisFormData[1].value}</p>
@@ -175,7 +220,7 @@
 
                     //lets reflect changes in display---------------
                     contactListItem.replaceWith(
-                        `<li id="new-li" data-name="${thisFormData[0].value}" data-phone="${thisFormData[1].value}>" data-uniqueid="${uniqueId}">
+                        `<li class="new-li" data-name="${thisFormData[0].value}" data-phone="${thisFormData[1].value}>" data-uniqueid="${uniqueId}">
                             <div class="details">
                                 <p class="name">${thisFormData[0].value}</p>
                                 <p class="phone-number">${thisFormData[1].value}</p>
